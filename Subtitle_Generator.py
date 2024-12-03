@@ -10,6 +10,7 @@ import streamlit as st
 import whisper
 import ffmpeg
 import tempfile
+import os
 
 def generate_subtitles_whisper(audio_path):
     """Generate subtitles from an audio file."""
@@ -38,7 +39,6 @@ def format_time(seconds):
 # Streamlit UI
 st.title("Video Subtitle Generator")
 
-
 # Adding LinkedIn link and creator information
 st.markdown("""
 <div style="display: flex; align-items: center; background-color: black; padding: 5px; border-radius: 3px;">
@@ -48,18 +48,19 @@ st.markdown("""
         <span style="font-size: 18px; font-weight: bold; color: #fff;">Gokul nath</span>
     </a>
 </div>
-""", unsafe_allow_html=True)  # Adding a LinkedIn link with an icon and creator's name
-
+""", unsafe_allow_html=True)
 
 st.write("Upload a video file to generate subtitles")
 
 if "subtitles_generated" not in st.session_state:
     st.session_state.subtitles_generated = False
+    st.session_state.video_path = None
+    st.session_state.srt_path = None
 
 uploaded_file = st.file_uploader("Choose a video file...", type=["mp4", "mkv", "avi", "mov"])
 
 if uploaded_file is not None and not st.session_state.subtitles_generated:
-    # Extract audio from the uploaded video
+    # Save uploaded video to a temporary file
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_video:
         temp_video.write(uploaded_file.read())
         video_path = temp_video.name
@@ -77,7 +78,23 @@ if uploaded_file is not None and not st.session_state.subtitles_generated:
     srt_path = tempfile.NamedTemporaryFile(delete=False, suffix=".srt").name
     save_subtitles_srt(result, srt_path)
 
-    # Store the path in session state to avoid re-running
+    # Embed subtitles into the video using FFmpeg
+    st.write("Embedding subtitles into video...")
+    merged_video_path = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
+
+    # Use FFmpeg to add subtitles (re-encode to avoid compatibility issues)
+    try:
+        (
+            ffmpeg
+            .input(video_path)
+            .output(merged_video_path, vf=f"subtitles='{srt_path}'", vcodec='libx264', acodec='aac', strict='experimental')
+            .run(overwrite_output=True)
+        )
+    except ffmpeg.Error as e:
+        st.error(f"Error embedding subtitles: {e.stderr.decode()}")
+
+    # Store the paths in session state
+    st.session_state.video_path = merged_video_path
     st.session_state.srt_path = srt_path
     st.session_state.subtitles_generated = True
 
@@ -90,5 +107,21 @@ if st.session_state.subtitles_generated:
             file_name="subtitles.srt",
             mime="text/plain"
         )
+
+    # Display the video with embedded subtitles using Streamlit's built-in player
+    st.write("### Play video with embedded subtitles")
+    st.video(st.session_state.video_path)
+
+# Add a reset button to clear the session state
+if st.button("Reset and Start Over"):
+    # Delete temporary video and subtitle files if they exist
+    if st.session_state.video_path and os.path.exists(st.session_state.video_path):
+        os.remove(st.session_state.video_path)
+    if st.session_state.srt_path and os.path.exists(st.session_state.srt_path):
+        os.remove(st.session_state.srt_path)
+
+    # Clear the session state and restart
+    st.session_state.clear()
+    
 
 
