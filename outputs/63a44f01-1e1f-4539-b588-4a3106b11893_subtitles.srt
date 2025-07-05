@@ -1,0 +1,28 @@
+1
+00:00:00,000 --> 00:00:10,080
+So, yeah this is a video subtitle generator, you can upload up to 10 GB video file, it
+
+2
+00:00:10,080 --> 00:00:17,879
+extracts audio first and then generates subtitles and it embeds that subtitle into the
+
+3
+00:00:17,879 --> 00:00:22,039
+video and it at last it gives you two format.
+
+4
+00:00:22,039 --> 00:00:29,280
+One you can download just subtitles and you can download the video with the subtitle
+
+5
+00:00:29,280 --> 00:00:36,280
+and you after that there is another choice that you can play the video, the embedded video
+
+6
+00:00:36,280 --> 00:00:45,240
+that means the subtitles included video into the player itself like it shows you.
+
+7
+00:00:45,240 --> 00:00:45,719
+Thank you.
+
