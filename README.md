@@ -5,7 +5,6 @@ This repository contains a modern web application that generates subtitles from 
 ## 📚 Table of Contents
 
 - [✨ Features](#features)
-- [🚀 Demo](#demo)
 - [🛠️ Installation](#installation)
 - [📝 Usage](#usage)
 - [🖼️ Screenshots](#screenshots)
@@ -26,11 +25,7 @@ This repository contains a modern web application that generates subtitles from 
 - 📱 Fully responsive design that works on desktop and mobile devices.
 - ⚡ Real-time progress tracking with visual feedback.
 
-## 🚀 Demo
 
-You can try a live demo of the application by uploading a video and generating subtitles.
-
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Flask%20App-ff4b4b?style=flat&logo=flask)](https://your-demo-link.com)
 
 ## 🛠️ Installation
 
