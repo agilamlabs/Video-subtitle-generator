@@ -7,7 +7,7 @@ This repository contains a modern web application that generates subtitles from 
 - [✨ Features](#features)
 - [🚀 Demo](#demo)
 - [🛠️ Installation](#installation)
-- [�� Usage](#usage)
+- [📝 Usage](#usage)
 - [🖼️ Screenshots](#screenshots)
 - [🧰 Technologies Used](#technologies-used)
 - [🙏 Acknowledgments](#acknowledgments)
