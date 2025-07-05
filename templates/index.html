@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Subtitle Generator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <i class="fas fa-film"></i>
+                    Video Subtitle Generator
+                </h1>
+                <div class="creator-info">
+                    <span class="creator-label">Created by:</span>
+                    <a href="https://www.linkedin.com/in/gn-raavanan" target="_blank" class="creator-link">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" class="linkedin-icon">
+                        <span class="creator-name">Gokul nath</span>
+                    </a>
+                    <a href="https://www.youtube.com/@agilamlabs" target="_blank" class="creator-link">
+                        <i class="fab fa-youtube youtube-icon"></i>
+                        <span class="creator-name">Agilam Labs</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Section -->
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <h3>Upload Video File</h3>
+                        <p>Drag and drop your video file here or click to browse</p>
+                        <p class="file-types">Supported formats: MP4, MKV, AVI, MOV</p>
+                        <input type="file" id="videoFile" accept=".mp4,.mkv,.avi,.mov" style="display: none;">
+                        <button class="upload-btn" onclick="document.getElementById('videoFile').click()">
+                            <i class="fas fa-folder-open"></i>
+                            Choose Video File
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processing Section -->
+            <div class="processing-section" id="processingSection" style="display: none;">
+                <div class="processing-card">
+                    <h3><i class="fas fa-cog fa-spin"></i> Processing Video</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Starting processing...</div>
+                    </div>
+                    <div class="processing-steps">
+                        <div class="step" id="step1">
+                            <i class="fas fa-music"></i>
+                            <span>Extracting Audio</span>
+                        </div>
+                        <div class="step" id="step2">
+                            <i class="fas fa-brain"></i>
+                            <span>Generating Subtitles</span>
+                        </div>
+                        <div class="step" id="step3">
+                            <i class="fas fa-closed-captioning"></i>
+                            <span>Embedding Subtitles</span>
+                        </div>
+                        <div class="step" id="step4">
+                            <i class="fas fa-check"></i>
+                            <span>Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-card">
+                    <h3><i class="fas fa-check-circle"></i> Processing Complete!</h3>
+                    
+                    <!-- Video Player -->
+                    <div class="video-container">
+                        <h4>Video with Embedded Subtitles</h4>
+                        <video id="videoPlayer" controls class="video-player">
+                            <source id="videoSource" src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    <!-- Download Buttons -->
+                    <div class="download-buttons">
+                        <button class="download-btn primary" onclick="downloadVideo()">
+                            <i class="fas fa-download"></i>
+                            Download Video with Subtitles
+                        </button>
+                        <button class="download-btn secondary" onclick="downloadSRT()">
+                            <i class="fas fa-file-text"></i>
+                            Download SRT File
+                        </button>
+                    </div>
+
+                    <!-- Reset Button -->
+                    <button class="reset-btn" onclick="resetApp()">
+                        <i class="fas fa-redo"></i>
+                        Process Another Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div class="error-section" id="errorSection" style="display: none;">
+                <div class="error-card">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Error</h3>
+                    <p id="errorMessage"></p>
+                    <button class="reset-btn" onclick="resetApp()">
+                        <i class="fas fa-redo"></i>
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 Video Subtitle Generator.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> 
